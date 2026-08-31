@@ -11,3 +11,5 @@ Or you can also do this :
   -  `git fetch origin`
   -  `git merge origin/branch-name`
 
+### This is another change made from the origin
+Pull this to your local working directory 
