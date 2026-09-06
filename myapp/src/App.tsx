@@ -1,22 +1,34 @@
+import Button from "./components/Button";
+import Card from "./components/Card";
 
-import ProfileCard from "./ProfileCard";
-
-export default function App (){
-
+export default function App(){
   return(
-    <div >
-      <h1 >User List</h1>
-      <ProfileCard
-        name = "Samriddha Gautam"
-        role="Senior Developer"
-        skills={["React Native", "Mobile Developer" , "Typescript"]}
-        isOnline={true}
+    <div>
+      <Card
+        user={{ 
+          name:"Samriddha Gautam",
+          role :"Senior Developer"
+        }}
+        isOnline = {true}
       />
-      <ProfileCard
-        name = "John Doe"
-        role="Developer"
-        skills={["React", "Web Developer" , "Typescript"]}
-        isOnline={false}
+      <Card
+        user={{ 
+          name:"John Doe",
+          role :"Junior Developer"
+        }}
+        isOnline = {false}
+      />
+      <Card
+        user={{ 
+          name:"Alice Wilson",
+          role :"UI/UX"
+        }}
+        isOnline = {true}
+      />
+      <Button 
+        text="Logout"
+        variant="danger"
+        onclick={()=>alert("You have been logged out")}
       />
     </div>
   )
