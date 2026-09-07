@@ -1,35 +1,57 @@
+import { use, useEffect, useState } from "react";
 import Button from "./components/Button";
-import Card from "./components/Card";
 
-export default function App(){
-  return(
-    <div>
-      <Card
-        user={{ 
-          name:"Samriddha Gautam",
-          role :"Senior Developer"
-        }}
-        isOnline = {true}
+export default function App() {
+  const [name, setName] = useState<string>("");
+  const [age, setAge] = useState<number>();
+  const [rating, setRating] = useState<number>(0);
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log('Rating changed!',rating)
+  },[rating]);
+
+  function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    setSubmitted(true);
+  }
+
+  function increaseRating() {
+    setRating((prev) => Math.min(prev + 1, 5));
+  }
+
+  function decreaseRating() {
+    setRating((prev) => Math.max(prev - 1, 0));
+  }
+
+  if (submitted) {
+    return (
+      <p>
+        Thank you ! {name} You rated us {rating}⭐
+      </p>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Enter your name..."
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
-      <Card
-        user={{ 
-          name:"John Doe",
-          role :"Junior Developer"
-        }}
-        isOnline = {false}
+      <input
+        type="number"
+        placeholder="Enter your age..."
+        value={age}
+        onChange={(e) => setAge(Number(e.target.value))}
       />
-      <Card
-        user={{ 
-          name:"Alice Wilson",
-          role :"UI/UX"
-        }}
-        isOnline = {true}
-      />
-      <Button 
-        text="Logout"
-        variant="danger"
-        onclick={()=>alert("You have been logged out")}
-      />
-    </div>
-  )
+
+      <div>
+        <Button text="+" variant="primary" onclick={increaseRating} />
+        <Button text="-" variant="danger" onclick={decreaseRating} />
+      </div>
+      <Button type="submit" variant="secondary" text="Submit" />
+    </form>
+  );
 }
