@@ -1,6 +1,6 @@
 type ButtonProps={
     text : string ;
-    onclick ?: ()=>void;
+    onclick ?: () =>  void;
     variant : "primary" | "secondary" | "danger" ;
     type ?: "button" | "submit" | "reset"
 }
