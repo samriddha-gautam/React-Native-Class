@@ -1,54 +1,24 @@
 import Button from "./Button";
 
-type UserCardProps = {
-    user: {
+type CardProps = {
+    entity: {
+        id: number
         name: string
-        role: string
-    }
-    isOnline: boolean;
+        }
+    boolValue: boolean;
 }
 
 
-// function ConditionalButtonRendering ({isOnline}: {isOnline:boolean}){
-//     if (isOnline) {
-//         return(
-//             <Button
-//             text= "Praise"
-//             variant="primary"
-//             />
-//         )
-//         }
-//         else {
-//             return(
-//                 <Button
-//                 text="Nudge"
-//                 variant="secondary"
-//                 onclick={()=>alert("Please come online")}
-//                 />
-//             )
-//             }
 
-// }
-export default function Card({ user, isOnline = false }: UserCardProps) {
+export default function Card({ entity, boolValue = false }: CardProps) {
     return (
-        <div className="bg-yellow-200 w-67  m-8 p-4 rounded-xl mx-auto">
-            <h3 className="font-bold text-2xl text-blue-500">{user.name}</h3>
-            <p className="text-blue-400 lowercase">{user.role}</p>
-            <p className={`${isOnline ? 'text-green-400' : 'text-red-400'}`}>{isOnline ? "✅ Online" : "❌ Offline"}</p>
+        <div>
+            <h3 className="font-bold text-2xl text-blue-500">{entity.name}</h3>
+            <p className={`${boolValue ? 'text-green-400' : 'text-red-400'}`}>{boolValue ? "✅ Online" : "❌ Offline"}</p>
 
-            {/* <ConditionalButtonRendering isOnline = {isOnline}/> */}
+            {/* <ConditionalButtonRendering boolValue = {boolValue}/> */}
 
-            {isOnline ? (
-                <Button
-                    text="Praise"
-                    variant="primary"
-                />
-            ) : (
-                <Button text="Nudge"
-                    variant="secondary"
-                    onclick={() => alert("Please come online")} />
-            )
-            }
+            
         </div>
     )
 }

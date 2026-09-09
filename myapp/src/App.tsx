@@ -1,57 +1,59 @@
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "./components/Button";
+import Card from "./components/Card";
+
+type Task = {
+  id: number;
+  title: string;
+  completed: boolean;
+  status: "completed" | "in-progress" | "failed"
+};
+
+const initialTasks: Task[] = [
+  { id: 1, title: "Read", completed: true , status:"completed"},
+  { id: 2, title: "Code", completed: false , status:"in-progress"},
+  { id: 3, title: "Play", completed: false , status: "completed"},
+];
 
 export default function App() {
-  const [name, setName] = useState<string>("");
-  const [age, setAge] = useState<number>();
-  const [rating, setRating] = useState<number>(0);
-  const [submitted, setSubmitted] = useState<boolean>(false);
+    
+    const [tasks, setTasks] = useState<Task[]>(initialTasks)
 
-  useEffect(() => {
-    console.log('Rating changed!',rating)
-  },[rating]);
-
-  function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    setSubmitted(true);
+    const toggleTaskComplete = (id:number) => {
+        
+        setTasks(tasks.map((task)=>task.id === id? {...task , completed:!task.completed}:task))
   }
-
-  function increaseRating() {
-    setRating((prev) => Math.min(prev + 1, 5));
-  }
-
-  function decreaseRating() {
-    setRating((prev) => Math.max(prev - 1, 0));
-  }
-
-  if (submitted) {
-    return (
-      <p>
-        Thank you ! {name} You rated us {rating}⭐
-      </p>
-    );
-  }
-
+    
+    function completedTasks({status}: {status :"completed" | "in-progress" | "failed"}){
+        if(status === "completed")
+            return <p className="text-green-400"><b>The task has been completed</b></p>
+        if(status=== "in-progress")
+            return <p className="text-yellow-500"><b>The task is in progres ...</b></p>
+        return <p className="text-red-600"><b>Failed to do the task!</b></p>
+    }
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Enter your name..."
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Enter your age..."
-        value={age}
-        onChange={(e) => setAge(Number(e.target.value))}
-      />
-
-      <div>
-        <Button text="+" variant="primary" onclick={increaseRating} />
-        <Button text="-" variant="danger" onclick={decreaseRating} />
-      </div>
-      <Button type="submit" variant="secondary" text="Submit" />
-    </form>
+    <div>
+      {tasks.map((task) => (
+        <div  className="bg-yellow-200 w-67  m-8 p-4 rounded-xl mx-auto">
+          <Card
+            key={task.id}
+            entity={{ id: task.id, name: task.title }}
+            boolValue={task.completed}
+          />
+          <Button
+            key={task.id}
+            text={task.completed ? "Done" : "Mark Cmplete"}
+            onclick={()=>toggleTaskComplete(task.id)}
+            variant={task.completed ? "primary" : "secondary"}
+          />
+        <div key={task.id}>
+            {completedTasks({status:task.status})}
+        </div>
+        </div>
+        
+      ))}
+     
+      
+    </div>
   );
 }
