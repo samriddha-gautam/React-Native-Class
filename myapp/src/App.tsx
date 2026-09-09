@@ -1,45 +1,58 @@
 import { useEffect, useState } from "react";
+import Card from "./components/Card";
 
-type User = {
+type todo = {
+  userId: number;
   id: number;
-  name: string;
-  email: string;
+  title: string;
+  completed: boolean;
 };
 
 export default function App() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [tasks, setTasks] = useState<todo[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [count , setCount] = useState<number>(0)
   useEffect(() => {
-    async function fetchUsers() {
+    async function fetchTasks() {
       try {
         const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users",
+          "https://jsonplaceholder.typicode.com/todos",
         );
-        const data: User[] = await response.json();
-        setUsers(data);
+        const data: todo[] = await response.json();
+        setTasks(data);
       } catch (error) {
-        setError("Failed to load users");
+        setError("Could not load tasks . Please try again");
       } finally {
         setIsLoading(false);
       }
     }
-    fetchUsers();
-  },[count]);
-  if (isLoading) return <p>Loading user data...</p>;
-  if (error) return <p>{error}</p>;
+
+    fetchTasks();
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading tasks...</p>;
+  }
+  if (error) {
+    return <p>Error loading tasks...</p>;
+  }
+  if (tasks.length === 0) {
+    return <p>No tasks found</p>;
+  }
 
   return (
-    <ul>
-      {users.map((user) => (
-        <li key={user.id}>
-          {user.name} - {user.email}
-        </li>
+    <>
+      <h2>
+        <b>Your TODO</b>
+      </h2>
+      {tasks.map((task) => (
+        <Card
+          key={task.id}
+          entity={{ id: task.id, name: task.title, extraproperty:task.userId }}
+          boolValue={task.completed}
+        />
       ))}
-    <button className="cursor-pointer" onClick={()=>setCount(count+1)}>Click {count}</button>
-    </ul>
-    
+    </>
   );
 }
