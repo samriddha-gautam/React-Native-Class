@@ -1,21 +1,16 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Tasks from "./pages/Tasks";
-import TaskDetail from "./pages/[id]";
-import Contact from "./pages/Contact";
-import Dashboard from "./pages/Dashboard";
-
+import TaskList from "./pages/TaskList";
+import TaskDetail from "./pages/TaskDetail";
+import NewTaskForm from "./pages/NewTaskForm";
+import TaskLayout from "./pages/TaskLayout";
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/tasks" element={<Tasks />} />
-      <Route path="/tasks/:taskId" element={<TaskDetail />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/dashboard/:userId" element={<Dashboard />} />
-      
+      <Route path="/tasks" element={<TaskLayout/>}>
+        <Route index element={<TaskList/>}/>
+        <Route path="new" element={<NewTaskForm/>}/>
+        <Route path=":taskId" element={<TaskDetail/>}/>
+      </Route>
     </Routes>
   );
 }
