@@ -1,58 +1,22 @@
-import { useEffect, useState } from "react";
-import Card from "./components/Card";
+import ThemeToggle from "./components/ThemeToggle";
+import UserContext from "./context/UserContext";
+import Dashboard from "./pages/Dashboard";
 
-type todo = {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
-};
+import ProfileMenu from "./pages/ProfileMenu";
 
 export default function App() {
-  const [tasks, setTasks] = useState<todo[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchTasks() {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/todos",
-        );
-        const data: todo[] = await response.json();
-        setTasks(data);
-      } catch (error) {
-        setError("Could not load tasks . Please try again");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchTasks();
-  }, []);
-
-  if (isLoading) {
-    return <p>Loading tasks...</p>;
+  const user = {
+    id:1,
+    name:"John",
+    age:32,
+    location:"Pokhara",
+    isActive:true
   }
-  if (error) {
-    return <p>Error loading tasks...</p>;
-  }
-  if (tasks.length === 0) {
-    return <p>No tasks found</p>;
-  }
-
   return (
-    <>
-      <h2>
-        <b>Your TODO</b>
-      </h2>
-      {tasks.map((task) => (
-        <Card
-          key={task.id}
-          entity={{ id: task.id, name: task.title, extraproperty:task.userId }}
-          boolValue={task.completed}
-        />
-      ))}
-    </>
+    <UserContext.Provider value = {user}>
+      <ProfileMenu/>
+      <Dashboard/>
+      <ThemeToggle/>
+    </UserContext.Provider>
   );
 }
