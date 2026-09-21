@@ -1,16 +1,22 @@
-import { Routes, Route } from "react-router-dom";
-import TaskList from "./pages/TaskList";
-import TaskDetail from "./pages/TaskDetail";
-import NewTaskForm from "./pages/NewTaskForm";
-import TaskLayout from "./pages/TaskLayout";
+import ThemeToggle from "./components/ThemeToggle";
+import UserContext from "./context/UserContext";
+import Dashboard from "./pages/Dashboard";
+
+import ProfileMenu from "./pages/ProfileMenu";
+
 export default function App() {
+  const user = {
+    id:1,
+    name:"John",
+    age:32,
+    location:"Pokhara",
+    isActive:true
+  }
   return (
-    <Routes>
-      <Route path="/tasks" element={<TaskLayout/>}>
-        <Route index element={<TaskList/>}/>
-        <Route path="new" element={<NewTaskForm/>}/>
-        <Route path=":taskId" element={<TaskDetail/>}/>
-      </Route>
-    </Routes>
+    <UserContext.Provider value = {user}>
+      <ProfileMenu/>
+      <Dashboard/>
+      <ThemeToggle/>
+    </UserContext.Provider>
   );
 }
