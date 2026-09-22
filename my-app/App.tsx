@@ -3,7 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 
 type Skill = {
-  id: number;
+  id: number
   name: string;
 };
 
