@@ -1,4 +1,26 @@
-import { View , StyleSheet, Dimensions,Text} from "react-native";
+import { View, Text, ScrollView } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+
+type Skill = {
+  id: number
+  name: string;
+};
+
+const skills: Skill[] = [
+  {
+    id: 1,
+    name: "Typescripts",
+  },
+  {
+    id: 2,
+    name: "React",
+  },
+  {
+    id: 3,
+    name: "React Native",
+  },
+];
 
 const screenWidth = Dimensions.get("window").width;
 
