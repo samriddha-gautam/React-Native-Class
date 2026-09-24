@@ -22,94 +22,96 @@ const skills: Skill[] = [
   },
 ];
 
-export default function App() {
-  return (
-    <View>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Home</Text>
-        <Text style={styles.headerText}>Contact</Text>
-        <Text style={styles.headerText}>About</Text>
-      </View>
-      <View style={styles.row}>
-        <View style={[styles.container]}>
-          <View style={styles.box}>
-            <Text style={styles.viewText}>1</Text>
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.viewText}>2</Text>
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.viewText}>3</Text>
-          </View>
-        </View>
-        <View style={styles.container2}>
-          <View style={styles.box}>
-            <Text style={styles.viewText}>a</Text>
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.viewText}>b</Text>
-          </View>
-          <View style={styles.box}>
-            <Text style={styles.viewText}>c</Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.viewText}>This is the card contents</Text>
-      </View>
-    </View>
-  );
+const screenWidth = Dimensions.get("window").width;
+
+type Skill = {
+  id:number , 
+  name:string
 }
 
-const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height;
+const skills : Skill[] =[
+  {
+    id:1,
+    name:'Typescript'
+  },
+  {
+    id:2,
+    name:'PostgresSQl'
+  },
+  {
+    id:3,
+    name:'React Native'
+  },
+]
+
+export default function App(){
+  return(
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.avatarPlaceholder}/>
+        <View>
+            <Text style={styles.name}>Samriddha Gautam</Text>
+            <Text style={styles.role}>Software Engineer</Text>
+        </View>
+      </View>
+      <View style={styles.skillsRow}>
+        {skills.map((skill)=>(
+          <View key={skill.id} style={styles.skillsBadge}>
+             <Text style={styles.skillText}>{skill.name}</Text> 
+          </View>
+        ))}
+      </View>
+    </View>
+  )
+}
+
 
 const styles = StyleSheet.create({
-  header: {
-    paddingTop: Platform.OS === "android" ? 44 : 24,
+  container:{
+    width:screenWidth * 0.9,
+    marginTop:60,
+    alignSelf:'center',
+    padding:16,
+    backgroundColor:'#ebdbc1',
+    borderRadius:16
+  },
+  header:{
     flexDirection:"row",
-    justifyContent:'space-evenly'
+    alignItems:"center",
+    marginBottom:16,
   },
-  headerText:{
-    fontWeight:900,
-    fontSize:21,
-    color:'red'
+  avatarPlaceholder:{
+    width:60,
+    height:60,
+    borderRadius:30,
+    backgroundColor:"lightgray",
+    marginRight:12
   },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  name:{
+    fontSize:18,
+    fontWeight:'bold'
+  },
+  role:{
+    fontSize:14,
+    color:"gray"
+  },
+  skillsRow:{
+    flexDirection:'row',
+    justifyContent:'center',
+    flexWrap:'wrap'
+  },
+  skillsBadge:{
+    backgroundColor:"#b5a892",
+    paddingVertical:4,
+    paddingHorizontal:10,
+    borderRadius:5,
+    marginLeft:10,
+    marginBottom:8
 
   },
-  container: {
-    flex: 1,
-    marginTop: 50,
-  },
-  container2: {
-    flex: 1,
-    marginTop: 50,
-  },
-  box: {
-    width: 60,
-    height: 60,
-    backgroundColor: "steelblue",
-    margin: 5,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  viewText: {
-    color: "#ffffff",
-    fontWeight: "900",
-    fontSize: 24,
-  },
-  card: {
-    width: screenWidth * 0.9,
-    height: "50%",
-    borderRadius: 15,
-    padding: 16,
-    backgroundColor: "green",
-    margin: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+  skillText:{
+    color:"yellow",
+    fontSize:12,
+    fontWeight:"bold"
+  }
+})
