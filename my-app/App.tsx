@@ -1,48 +1,31 @@
 import {NavigationContainer} from "@react-navigation/native"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import {View , Text } from "react-native"
+import { createDrawerNavigator } from "@react-navigation/drawer"
 
 function HomeScreen(){
   return(
     <View>
-      <Text>
-        Home
-      </Text>
+      <Text>Home</Text>
     </View>
   )
 }
-
-function SearchScreen(){
+function Settings(){
   return(
     <View>
-      <Text>
-        Search
-      </Text>
+      <Text>Settings</Text>
     </View>
   )
 }
 
-function ProfileScreen(){
-  return(
-    <View>
-      <Text>Profile</Text>
-    </View>
-  )
-}
-
-const Tab = createBottomTabNavigator()
+const Drawer = createDrawerNavigator()
 
 export default function App(){
   return(
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{
-        tabBarActiveTintColor:"red",
-        tabBarInactiveTintColor:"green"
-      }}>
-        <Tab.Screen name="Home" component={HomeScreen} options={{tabBarLabel:"Feed"}}/>
-        <Tab.Screen name="Search" component={SearchScreen}/>
-        <Tab.Screen name="Profile" component={ProfileScreen}/>
-      </Tab.Navigator>
+      <Drawer.Navigator>
+        <Drawer.Screen name="Home" component={HomeScreen}/>
+        <Drawer.Screen name="Settings" component={Settings}/>
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }
