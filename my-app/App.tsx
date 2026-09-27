@@ -22,96 +22,63 @@ const skills: Skill[] = [
   },
 ];
 
-const screenWidth = Dimensions.get("window").width;
-
-type Skill = {
-  id:number , 
-  name:string
+type HomeStackParamList ={
+  Feed:undefined
+  PostDetails:{
+    postId:string
+    title:string
+  }
 }
 
-const skills : Skill[] =[
-  {
-    id:1,
-    name:'Typescript'
-  },
-  {
-    id:2,
-    name:'PostgresSQl'
-  },
-  {
-    id:3,
-    name:'React Native'
-  },
-]
+const HomeStack = createNativeStackNavigator<HomeStackParamList>()
 
-export default function App(){
+function FeedScreen({navigation}:any) {
   return(
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.avatarPlaceholder}/>
-        <View>
-            <Text style={styles.name}>Samriddha Gautam</Text>
-            <Text style={styles.role}>Software Engineer</Text>
-        </View>
-      </View>
-      <View style={styles.skillsRow}>
-        {skills.map((skill)=>(
-          <View key={skill.id} style={styles.skillsBadge}>
-             <Text style={styles.skillText}>{skill.name}</Text> 
-          </View>
-        ))}
-      </View>
+    <View>
+      <Button title="View Post" onPress={()=> navigation.navigate("PostDetails", {postId:"43", title:"My first Post"})}/>
     </View>
   )
 }
 
 
-const styles = StyleSheet.create({
-  container:{
-    width:screenWidth * 0.9,
-    marginTop:60,
-    alignSelf:'center',
-    padding:16,
-    backgroundColor:'#ebdbc1',
-    borderRadius:16
-  },
-  header:{
-    flexDirection:"row",
-    alignItems:"center",
-    marginBottom:16,
-  },
-  avatarPlaceholder:{
-    width:60,
-    height:60,
-    borderRadius:30,
-    backgroundColor:"lightgray",
-    marginRight:12
-  },
-  name:{
-    fontSize:18,
-    fontWeight:'bold'
-  },
-  role:{
-    fontSize:14,
-    color:"gray"
-  },
-  skillsRow:{
-    flexDirection:'row',
-    justifyContent:'center',
-    flexWrap:'wrap'
-  },
-  skillsBadge:{
-    backgroundColor:"#b5a892",
-    paddingVertical:4,
-    paddingHorizontal:10,
-    borderRadius:5,
-    marginLeft:10,
-    marginBottom:8
+function PostDetailsScreen({route , navigation}:any){
+  const {postId, title} = route.params;
+  return(
+    <View>
+      <Text>Post:{title}</Text>
+      <Text>Id: {postId}</Text>
+    <Button title="Go Back" onPress={()=>navigation.goBack()}/>
 
-  },
-  skillText:{
-    color:"yellow",
-    fontSize:12,
-    fontWeight:"bold"
-  }
-})
+    </View>
+  )
+}
+
+function HomeStackNavigator(){
+  return(
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Feed" component={FeedScreen}/>
+      <HomeStack.Screen name="PostDetails" component={PostDetailsScreen}/>
+    </HomeStack.Navigator>
+  )
+}
+
+const Tab = createBottomTabNavigator();
+
+function ProfileScreen(){
+  return(
+    <View>
+      <Text>Profile</Text>
+    </View>
+  )
+}
+
+export default function App(){
+  return(
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="HomeTab" component={HomeStackNavigator} options={{title:"Home"}}/>
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  )
+}
