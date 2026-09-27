@@ -1,38 +1,48 @@
 import {NavigationContainer} from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { View,Text , Button } from "react-native"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import {View , Text } from "react-native"
 
-type RootStackParamList = {
-  Home:undefined
-  Details:undefined
-}
-
-const Stack = createNativeStackNavigator<RootStackParamList>()
-
-function HomeScreen({navigation}:any) {
+function HomeScreen(){
   return(
     <View>
-      <Text>Home Screen</Text>
-      <Button title="Go to Details" onPress={()=>navigation.navigate("Details")}/>
-    </View>
-  )
-} 
-
-function DetailsScreen(){
-  return(
-    <View>
-      <Text>Details Screen</Text>
+      <Text>
+        Home
+      </Text>
     </View>
   )
 }
+
+function SearchScreen(){
+  return(
+    <View>
+      <Text>
+        Search
+      </Text>
+    </View>
+  )
+}
+
+function ProfileScreen(){
+  return(
+    <View>
+      <Text>Profile</Text>
+    </View>
+  )
+}
+
+const Tab = createBottomTabNavigator()
 
 export default function App(){
   return(
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen}/>
-        <Stack.Screen name="Details" component={DetailsScreen}/>
-      </Stack.Navigator>
+      <Tab.Navigator screenOptions={{
+        tabBarActiveTintColor:"red",
+        tabBarInactiveTintColor:"green"
+      }}>
+        <Tab.Screen name="Home" component={HomeScreen} options={{tabBarLabel:"Feed"}}/>
+        <Tab.Screen name="Search" component={SearchScreen}/>
+        <Tab.Screen name="Profile" component={ProfileScreen}/>
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }
