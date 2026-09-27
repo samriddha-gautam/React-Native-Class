@@ -1,5 +1,5 @@
 import {NavigationContainer} from "@react-navigation/native"
-import {View , Text } from "react-native"
+import {View , Text, Button } from "react-native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
@@ -7,23 +7,29 @@ type HomeStackParamList ={
   Feed:undefined
   PostDetails:{
     postId:string
+    title:string
   }
 }
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>()
 
-function FeedScreen({native}:any) {
+function FeedScreen({navigation}:any) {
   return(
     <View>
-      <Text>Feed</Text>
+      <Button title="View Post" onPress={()=> navigation.navigate("PostDetails", {postId:"43", title:"My first Post"})}/>
     </View>
   )
 }
 
-function PostDetailsScreen(){
+
+function PostDetailsScreen({route , navigation}:any){
+  const {postId, title} = route.params;
   return(
     <View>
-      <Text>Post Details</Text>
+      <Text>Post:{title}</Text>
+      <Text>Id: {postId}</Text>
+    <Button title="Go Back" onPress={()=>navigation.goBack()}/>
+
     </View>
   )
 }
