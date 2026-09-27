@@ -1,31 +1,59 @@
 import {NavigationContainer} from "@react-navigation/native"
 import {View , Text } from "react-native"
-import { createDrawerNavigator } from "@react-navigation/drawer"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-function HomeScreen(){
+type HomeStackParamList ={
+  Feed:undefined
+  PostDetails:{
+    postId:string
+  }
+}
+
+const HomeStack = createNativeStackNavigator<HomeStackParamList>()
+
+function FeedScreen({native}:any) {
   return(
     <View>
-      <Text>Home</Text>
+      <Text>Feed</Text>
     </View>
   )
 }
-function Settings(){
+
+function PostDetailsScreen(){
   return(
     <View>
-      <Text>Settings</Text>
+      <Text>Post Details</Text>
     </View>
   )
 }
 
-const Drawer = createDrawerNavigator()
+function HomeStackNavigator(){
+  return(
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Feed" component={FeedScreen}/>
+      <HomeStack.Screen name="PostDetails" component={PostDetailsScreen}/>
+    </HomeStack.Navigator>
+  )
+}
+
+const Tab = createBottomTabNavigator();
+
+function ProfileScreen(){
+  return(
+    <View>
+      <Text>Profile</Text>
+    </View>
+  )
+}
 
 export default function App(){
   return(
     <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={HomeScreen}/>
-        <Drawer.Screen name="Settings" component={Settings}/>
-      </Drawer.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="HomeTab" component={HomeStackNavigator} options={{title:"Home"}}/>
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }
