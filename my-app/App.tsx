@@ -1,7 +1,26 @@
-import {NavigationContainer} from "@react-navigation/native"
-import {View , Text, Button } from "react-native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { View, Text, ScrollView } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+
+type Skill = {
+  id: number
+  name: string;
+};
+
+const skills: Skill[] = [
+  {
+    id: 1,
+    name: "Typescripts",
+  },
+  {
+    id: 2,
+    name: "React",
+  },
+  {
+    id: 3,
+    name: "React Native",
+  },
+];
 
 type HomeStackParamList ={
   Feed:undefined
